@@ -18,14 +18,15 @@ if [ -z "$INPUT_DOCKERFILE" ]; then
   else DFILE=$INPUT_DOCKERFILE;
 fi
 
-# build docker image
-docker build . --file $DFILE --tag image
+IMAGE_ID="$INPUT_GITREPO/$INPUT_IMAGENAME"
 
 # login to registry
 echo "$INPUT_REGISTRYTOKEN" | docker login $INPUT_REGISTRYNAME -u $INPUT_REGISTRYUSER --password-stdin
 
+# build docker image
+docker build -t $IMAGE_ID -f $DFILE . || exit 1
+
 # push image
-IMAGE_ID="$INPUT_REGISTRYNAME/$INPUT_GITREPO/$INPUT_IMAGENAME"
 docker push $IMAGE_ID:$INPUT_IMAGETAG || exit 1
 
 # exit with image name
