@@ -1,0 +1,31 @@
+# action.yml
+name: 'Hello World'
+description: 'Greet someone and record the time'
+inputs:
+  gitrepo:
+    description: 'repository name'
+    required: true
+  registryname:
+    description: 'registry hostname'
+    required: true
+  registryuser:
+    description: 'repository hostname'
+    required: true
+  registrytoken:
+    description: 'repository hostname'
+    required: true
+  imagetag:
+    description: 'repository hostname'
+    required: true
+  imagename:
+    description: 'repository hostname'
+    required: true
+  dockerfile:
+    description: 'Dockerfile name - optional - default is Dockerfile'
+    required: false
+outputs:
+  image:
+    description: 'image url on registry'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
