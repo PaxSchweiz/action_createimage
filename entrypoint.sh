@@ -27,7 +27,8 @@ echo "$INPUT_REGISTRYTOKEN" | docker login $INPUT_REGISTRYNAME -u $INPUT_REGISTR
 docker build -t $IMAGE_ID -f $DFILE . || exit 1
 
 # push image
-docker push $IMAGE_ID:$INPUT_IMAGETAG || exit 1
+docker tag $IMAGE_ID "$INPUT_INPUT_REGISTRYNAME/$IMAGE_ID:$INPUT_IMAGETAG" || exit 1
+docker push "$INPUT_INPUT_REGISTRYNAME/$IMAGE_ID:$INPUT_IMAGETAG" || exit 1
 
 # exit with image name
 echo ::set-output name=image::$IMAGE_ID:$INPUT_IMAGETAG
