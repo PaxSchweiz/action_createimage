@@ -7,7 +7,7 @@
 #
 # @Description
 # create docker image and push it to a registry
-#
+# we use SEMVER.org for tag's
 #-------------------------------------------------------------------------------
 
 echo "Pax GitHub Automation - create image and push to registry"
@@ -18,6 +18,14 @@ if [ -z "$INPUT_DOCKERFILE" ]; then
   else DFILE=$INPUT_DOCKERFILE;
 fi
 
+# create image name and imagetag
+# Strip git ref prefix from version
+VERSION=$(echo "$INPUT_GITREF" | sed -e 's,.*/\(.*\),\1,')
+# Strip "v" prefix from tag name
+[[ "$INPUT_GITREF" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+# Use Docker `latest` tag convention
+[ "$VERSION" == "master" ] && VERSION=latest
+
 IMAGE_ID="$INPUT_GITREPO/$INPUT_IMAGENAME"
 
 # login to registry
@@ -27,8 +35,9 @@ echo "$INPUT_REGISTRYTOKEN" | docker login $INPUT_REGISTRYNAME -u $INPUT_REGISTR
 docker build -t $IMAGE_ID -f $DFILE . || exit 1
 
 # push image
-docker tag $IMAGE_ID "$INPUT_REGISTRYNAME/$IMAGE_ID:$INPUT_IMAGETAG" || exit 1
-docker push "$INPUT_REGISTRYNAME/$IMAGE_ID:$INPUT_IMAGETAG" || exit 1
+docker tag $IMAGE_ID "$INPUT_REGISTRYNAME/$IMAGE_ID:$VERSION" || exit 1
+docker push "$INPUT_REGISTRYNAME/$IMAGE_ID:$VERSION" || exit 1
 
 # exit with image name
-echo ::set-output name=image::$IMAGE_ID:$INPUT_IMAGETAG
+echo ::set-output name=image::$IMAGE_ID:$VERSION
+echo ::set-output name=tag::$VERSION

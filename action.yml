@@ -9,16 +9,16 @@ inputs:
     description: 'registry hostname'
     required: true
   registryuser:
-    description: 'repository hostname'
+    description: 'registry user / actor'
     required: true
   registrytoken:
-    description: 'repository hostname'
+    description: 'registry token / password'
     required: true
-  imagetag:
-    description: 'repository hostname'
+  gitref:
+    description: 'git ref to create the image tag'
     required: true
   imagename:
-    description: 'repository hostname'
+    description: 'container image name'
     required: true
   dockerfile:
     description: 'Dockerfile name - optional - default is Dockerfile'
@@ -26,6 +26,8 @@ inputs:
 outputs:
   image:
     description: 'image url on registry'
+  tag:
+    description: 'tag of image'
 runs:
   using: 'docker'
   image: 'Dockerfile'
