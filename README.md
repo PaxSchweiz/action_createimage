@@ -3,7 +3,7 @@
 This action pushes an image to the registry. See [action metadata](action.yml)
 
 ## Example usage
-
+```yaml
 uses: PaxSchweiz/action_createimage@v1
 with:
   gitrepo: 'myrepo'
@@ -12,3 +12,4 @@ with:
   registrytoken: ${{ secrets.GITHUB_TOKEN }}
   gitref: ${{ github.ref }}
   imagename: 'usually_same_as_repo_name'
+```
