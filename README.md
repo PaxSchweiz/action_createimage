@@ -4,7 +4,7 @@ This action pushes an image to the registry. See [action metadata](action.yml)
 
 ## Example usage
 ```yaml
-uses: PaxSchweiz/action_createimage@v1
+uses: PaxSchweiz/action_createimage@1.0.0
 with:
   gitrepo: 'myrepo'
   registryname: 'docker.pkg.github.com'
