@@ -23,6 +23,12 @@ inputs:
   dockerfile:
     description: 'Dockerfile name - optional - default is Dockerfile'
     required: false
+  buildcontext:
+    description: 'Context for Docker build - optional - default is .'
+    required: false
+  buildarg:
+    description: 'Contents of --build-arg parameter passed to Docker build - optional - default is empty string'
+    required: false
 outputs:
   image:
     description: 'image url on registry'
