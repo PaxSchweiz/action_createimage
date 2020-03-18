@@ -1,6 +1,6 @@
 # action.yml
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Create Image'
+description: 'Create Docker image from GitHub repository and push it into a docker registry'
 inputs:
   gitrepo:
     description: 'repository name'
