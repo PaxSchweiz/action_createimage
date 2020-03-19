@@ -13,7 +13,7 @@
 echo "Pax GitHub Automation - create image and push to registry"
 
 # dockerfile filename (optional argument handling)
-DOCKERFILE="Dockerfile"
+DOCKERFILE="Dockerfile";
 if [ ! -z "$INPUT_DOCKERFILE" ]; then
     DOCKERFILE=$INPUT_DOCKERFILE;
 fi
