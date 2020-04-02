@@ -1,6 +1,6 @@
 # action.yml
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Create Image'
+description: 'Create Docker image from GitHub repository and push it into a docker registry'
 inputs:
   gitrepo:
     description: 'repository name'
@@ -22,6 +22,12 @@ inputs:
     required: true
   dockerfile:
     description: 'Dockerfile name - optional - default is Dockerfile'
+    required: false
+  buildcontext:
+    description: 'Context for Docker build - optional - default is .'
+    required: false
+  buildarg:
+    description: 'Contents of --build-arg parameter passed to Docker build - optional - default is empty string'
     required: false
 outputs:
   image:

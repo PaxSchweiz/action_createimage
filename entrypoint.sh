@@ -13,9 +13,21 @@
 echo "Pax GitHub Automation - create image and push to registry"
 
 # dockerfile filename (optional argument handling)
-if [ -z "$INPUT_DOCKERFILE" ]; then
-    DFILE="Dockerfile";
-  else DFILE=$INPUT_DOCKERFILE;
+DOCKERFILE="Dockerfile";
+if [ ! -z "$INPUT_DOCKERFILE" ]; then
+    DOCKERFILE=$INPUT_DOCKERFILE;
+fi
+
+# buildcontext path (optional argument handling)
+BUILDCONTEXT=".";
+if [ ! -z "$INPUT_BUILDCONTEXT" ]; then
+    BUILDCONTEXT=$INPUT_BUILDCONTEXT;
+fi
+
+# buildarg arguments (optional argument handling)
+BUILDARG="";
+if [ ! -z "$INPUT_BUILDARG" ]; then
+    BUILDARG="--build-arg $INPUT_BUILDARG";
 fi
 
 # create image name and imagetag
@@ -32,7 +44,7 @@ IMAGE_ID="$INPUT_GITREPO/$INPUT_IMAGENAME"
 echo "$INPUT_REGISTRYTOKEN" | docker login $INPUT_REGISTRYNAME -u $INPUT_REGISTRYUSER --password-stdin
 
 # build docker image
-docker build -t $IMAGE_ID -f $DFILE . || exit 1
+docker build $BUILDARG -t $IMAGE_ID -f $DOCKERFILE $BUILDCONTEXT || exit 1
 
 # push image
 docker tag $IMAGE_ID "$INPUT_REGISTRYNAME/$IMAGE_ID:$VERSION" || exit 1
