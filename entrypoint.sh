@@ -12,6 +12,10 @@
 
 echo "Pax GitHub Automation - create image and push to registry"
 
+# some github repositories contain uppercase letters
+# docker image names require lowercase letters only
+INPUT_GITREPO_LOWERCASE=`echo "$INPUT_GITREPO" | awk '{ print tolower($1) }'`
+
 # dockerfile filename (optional argument handling)
 DOCKERFILE="Dockerfile";
 if [ ! -z "$INPUT_DOCKERFILE" ]; then
@@ -38,7 +42,7 @@ VERSION=$(echo "$INPUT_GITREF" | sed -e 's,.*/\(.*\),\1,')
 # Use Docker `latest` tag convention
 [ "$VERSION" == "master" ] && VERSION=latest
 
-IMAGE_ID="$INPUT_GITREPO/$INPUT_IMAGENAME"
+IMAGE_ID="$INPUT_GITREPO_LOWERCASE/$INPUT_IMAGENAME"
 
 # login to registry
 echo "$INPUT_REGISTRYTOKEN" | docker login $INPUT_REGISTRYNAME -u $INPUT_REGISTRYUSER --password-stdin
