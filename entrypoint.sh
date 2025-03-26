@@ -39,8 +39,10 @@ fi
 VERSION=$(echo "$INPUT_GITREF" | sed -e 's,.*/\(.*\),\1,')
 # Strip "v" prefix from tag name
 [[ "$INPUT_GITREF" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-# Use Docker `latest` tag convention
-[ "$VERSION" == "master" ] && VERSION=latest
+# Use Docker `latest` tag convention for both 'master' and 'main' branches
+if [ "$VERSION" == "master" ] || [ "$VERSION" == "main" ]; then
+    VERSION=latest
+fi
 
 IMAGE_ID="$INPUT_GITREPO_LOWERCASE/$INPUT_IMAGENAME"
 
