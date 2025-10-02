@@ -20,6 +20,9 @@ inputs:
   imagename:
     description: 'container image name'
     required: true
+  imagetag:
+    description: 'container image tag'
+    required: false
   dockerfile:
     description: 'Dockerfile name - optional - default is Dockerfile'
     required: false
