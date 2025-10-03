@@ -46,7 +46,7 @@ fi
 
 if [ -n "$INPUT_IMAGETAG" ]; then
     VERSION="$INPUT_IMAGETAG"
-
+fi
 IMAGE_ID="$INPUT_GITREPO_LOWERCASE/$INPUT_IMAGENAME"
 
 # login to registry
